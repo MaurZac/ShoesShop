@@ -1,17 +1,17 @@
 package com.example.shoesshop.activity
 
 import android.os.Bundle
-import android.provider.MediaStore.Images
+import android.view.LayoutInflater
 import android.view.View
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
+import com.example.shoesshop.Adapter.BrandAdapter
 import com.example.shoesshop.Model.SliderModel
-import com.example.shoesshop.R
-import com.example.shoesshop.SliderAdapter
+import com.example.shoesshop.Adapter.SliderAdapter
 import com.example.shoesshop.ViewModel.MainViewModel
 import com.example.shoesshop.databinding.ActivityMainBinding
 
@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initBanner()
+        initBrand()
     }
     private fun initBanner(){
         binding.progressBarBanner.visibility = View.VISIBLE
@@ -49,5 +50,15 @@ class MainActivity : AppCompatActivity() {
             binding.dotIndicator.attachTo(binding.viewPagerSlider)
         }
         
+    }
+
+    private fun initBrand(){
+        binding.progressBarBrand.visibility = View.VISIBLE
+        viewModel.brands.observe(this, Observer {
+            binding.viewBrand.layoutManager = LinearLayoutManager(this@MainActivity,LinearLayoutManager.HORIZONTAL, false)
+            binding.viewBrand.adapter = BrandAdapter(it)
+            binding.progressBarBrand.visibility = View.GONE
+        })
+        viewModel.loadBrand()
     }
 }
