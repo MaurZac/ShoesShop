@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.shoesshop.Model.BrandModel
+import com.example.shoesshop.Model.ItemModel
 import com.example.shoesshop.Model.SliderModel
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -16,7 +17,11 @@ class MainViewModel():ViewModel(){
     private val firebaseDatabase = FirebaseDatabase.getInstance()
     private val _banner=MutableLiveData<List<SliderModel>>()
     private val _brand = MutableLiveData<MutableList<BrandModel>>()
+    private val _popular = MutableLiveData<MutableList<ItemModel>>()
+
     val brands: LiveData<MutableList<BrandModel>> = _brand
+    val popular: LiveData<MutableList<ItemModel>> = _popular
+
     val banners: LiveData<List<SliderModel>> = _banner
 
     fun loadBanners(){
@@ -44,15 +49,35 @@ class MainViewModel():ViewModel(){
                 val lists = mutableListOf<BrandModel>()
                 for (childSnapShot in snapshot.children){
                     val list = childSnapShot.getValue(BrandModel::class.java)
-                    if(list != null){
+                    if(list != null) {
                         lists.add(list)
                     }
-                    _brand.value = lists
                 }
+                _brand.value = lists
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+
+            }
+        })
+    }
+
+    fun loadPopular(){
+        val Ref = firebaseDatabase.getReference("Items")
+        Ref.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val lists = mutableListOf<ItemModel>()
+                for (childSnapShot in snapshot.children){
+                    val list = childSnapShot.getValue(ItemModel::class.java)
+                    if(list != null) {
+                        lists.add(list)
+                    }
+                }
+                _popular.value = lists
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
             }
         })
     }

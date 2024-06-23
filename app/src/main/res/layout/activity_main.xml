@@ -18,7 +18,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="100dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -144,6 +145,7 @@
                     android:id="@+id/viewBrand"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
                     android:clipToPadding="false"
                     android:paddingStart="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -197,7 +199,10 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/viewPopular"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
                 <ProgressBar
                     android:id="@+id/progressBarPopular"
