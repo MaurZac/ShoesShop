@@ -4,23 +4,21 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.shoesshop.Model.BrandModel
-import com.example.shoesshop.Model.ItemModel
+import com.example.shoesshop.Model.ItemsModel
 import com.example.shoesshop.Model.SliderModel
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import java.sql.Ref
-import java.util.Locale.Category
 
 class MainViewModel():ViewModel(){
     private val firebaseDatabase = FirebaseDatabase.getInstance()
     private val _banner=MutableLiveData<List<SliderModel>>()
     private val _brand = MutableLiveData<MutableList<BrandModel>>()
-    private val _popular = MutableLiveData<MutableList<ItemModel>>()
+    private val _popular = MutableLiveData<MutableList<ItemsModel>>()
 
     val brands: LiveData<MutableList<BrandModel>> = _brand
-    val popular: LiveData<MutableList<ItemModel>> = _popular
+    val popular: LiveData<MutableList<ItemsModel>> = _popular
 
     val banners: LiveData<List<SliderModel>> = _banner
 
@@ -66,9 +64,9 @@ class MainViewModel():ViewModel(){
         val Ref = firebaseDatabase.getReference("Items")
         Ref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val lists = mutableListOf<ItemModel>()
+                val lists = mutableListOf<ItemsModel>()
                 for (childSnapShot in snapshot.children){
-                    val list = childSnapShot.getValue(ItemModel::class.java)
+                    val list = childSnapShot.getValue(ItemsModel::class.java)
                     if(list != null) {
                         lists.add(list)
                     }

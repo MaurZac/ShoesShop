@@ -3,18 +3,17 @@ package com.example.shoesshop.Adapter
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
-import com.example.shoesshop.Model.ItemModel
-import com.example.shoesshop.databinding.ViewholderBrandBinding
+import com.example.shoesshop.Model.ItemsModel
+import com.example.shoesshop.activity.DetailActivity
 import com.example.shoesshop.databinding.ViewholderRecommendedBinding
 import com.example.shoesshop.Adapter.PopularAdapter as PopularAdapter1
 
-class PopularAdapter(val items:MutableList<ItemModel>):
+class PopularAdapter(val items:MutableList<ItemsModel>):
     RecyclerView.Adapter<PopularAdapter1.ViewHolder>() {
         private  var context:Context? = null
     class ViewHolder (val binding: ViewholderRecommendedBinding):RecyclerView.ViewHolder(binding.root)
@@ -36,9 +35,11 @@ class PopularAdapter(val items:MutableList<ItemModel>):
             .apply(requestOptions)
             .into(holder.binding.pic)
 
-       /* holder.itemView.setOnClickListener{
-            val intent = Intent(holder.itemView.context)
-        }*/
+        holder.itemView.setOnClickListener{
+            val intent = Intent(holder.itemView.context, DetailActivity::class.java)
+            intent.putExtra("object",items[position])
+            holder.itemView.context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int  = items.size
