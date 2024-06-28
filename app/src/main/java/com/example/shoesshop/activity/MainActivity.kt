@@ -1,5 +1,6 @@
 package com.example.shoesshop.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -28,7 +29,15 @@ class MainActivity : AppCompatActivity() {
         initBanner()
         initBrand()
         initPopular()
+        initBottomMenu()
     }
+
+    private fun initBottomMenu() {
+        binding.cartBtn.setOnClickListener{
+            startActivity(Intent(this@MainActivity,CartActivity::class.java))
+        }
+    }
+
     private fun initBanner(){
         binding.progressBarBanner.visibility = View.VISIBLE
         viewModel.banners.observe(this, Observer { items ->

@@ -33,6 +33,7 @@ class ColorAdapter(val items: ArrayList<String>):
         holder.binding.root.setOnClickListener{
             lastSelectedPosition = selectedPosition
             selectedPosition = position
+            notifyItemChanged(lastSelectedPosition)
             notifyItemChanged(selectedPosition)
         }
 
@@ -42,6 +43,7 @@ class ColorAdapter(val items: ArrayList<String>):
             holder.binding.colorLayout.setBackgroundResource(R.drawable.grey_bg)
         }
     }
+
 
     override fun getItemCount(): Int = items.size
 
